@@ -22,19 +22,19 @@
 </form>
 
 <form class="form-inline" *ngIf="cargarFormularios">
-  <button type="button" class="btn btn-dark" (click)="consulta()">Consultar</button>
-  <button type="button" class="btn btn-dark" (click)="actualizacion()">Actualizar</button>
+  <button type="button" class="btn btn-dark" (click)="operacion=1">Consultar</button>
+  <button type="button" class="btn btn-dark" (click)="operacion=2">Actualizar</button>
 </form>
 
 <div *ngIf="operacion==1">
   <form class="form-inline">
     <label class="mr-sm-2" for="inlineFormCustomSelect">intervalo 1</label>
-    <input class="form-control" type="number" id="example-number-input">
+    <input class="form-control" type="number" id="example-number-input" [(ngModel)] = "intervalo1" name="intervalo1">
 
     <label class="mr-sm-2" for="inlineFormCustomSelect">intervalo 2</label>
-    <input class="form-control" type="number" id="example-number-input">
+    <input class="form-control" type="number" id="example-number-input" [(ngModel)] = "intervalo2" name="intervalo2">
 
-    <button type="button" class="btn btn-dark">Consultar</button>
+    <button type="button" class="btn btn-dark" (click)="consulta()">Consultar</button>
   </form>
 </div>
 <div *ngIf="operacion==2">

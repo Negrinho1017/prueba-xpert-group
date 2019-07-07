@@ -16,6 +16,8 @@ export class AppComponent {
   cargarFormularios: boolean = false;
   calculadoraMatriz: CalculadoraMatriz = new CalculadoraMatriz();
   operacion: number;
+  intervalo1: number;
+  intervalo2: number;
 
   constructor( private service: AppService ) { }
 
@@ -43,6 +45,16 @@ export class AppComponent {
 
   consulta(){
     this.operacion = 1
+    if(this.intervalo1 < this.intervalo2){
+      this.service.consultar(this.intervalo1, this.intervalo2).subscribe(res => {
+        console.log("hola");
+        this.mensaje("El resultado es:"+ res,1);
+      }, error => {
+        this.mensaje(error.error.mensaje,2);
+      });
+    }else{
+      this.mensaje("El primer intervalo debe ser mayor al segundo",2);
+    }  
   }
 
   actualizacion(){

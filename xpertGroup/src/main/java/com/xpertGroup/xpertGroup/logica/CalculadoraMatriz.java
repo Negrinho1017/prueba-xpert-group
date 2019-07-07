@@ -6,14 +6,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 import com.xpertGroup.xpertGroup.dominio.Matriz;
+import com.xpertGroup.xpertGroup.dominio.excepcion.Excepcion;
 
 public class CalculadoraMatriz {
 
 	private int n;
+
 	private int m;
+
 	private int contadorOperaciones = 0;
 	private List<Matriz> matrices;
 
+	public CalculadoraMatriz() {}
+	
 	public CalculadoraMatriz(int n, int m) {
 		super();
 		this.n = n;
@@ -28,8 +33,8 @@ public class CalculadoraMatriz {
 				}
 			});
 			contadorOperaciones++;
-		}else {
-			throw new Exception("Maximo de llamados");
+		} else {
+			throw new Excepcion("Maximo de llamados");
 		}
 	}
 
@@ -54,7 +59,7 @@ public class CalculadoraMatriz {
 			contadorOperaciones++;
 			return matricesASumar.stream().map(m -> m.getW()).reduce(0, (a, b) -> a + b);
 		}
-		throw new Exception("Maximo de llamados");
+		throw new Excepcion("Maximo de llamados");
 	}
 
 	public void generarMatrices() {
@@ -66,4 +71,21 @@ public class CalculadoraMatriz {
 	public boolean hayMaximoDeLlamados() {
 		return contadorOperaciones >= m;
 	}
+
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
+	}
+
+	public int getM() {
+		return m;
+	}
+
+	public void setM(int m) {
+		this.m = m;
+	}
+
 }

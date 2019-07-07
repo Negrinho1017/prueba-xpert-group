@@ -6,6 +6,8 @@ public class Matriz {
 	private int z;
 	private int w;
 
+	public Matriz() {}
+	
 	public Matriz(int x, int y, int z, int w) {
 		super();
 		this.x = x;

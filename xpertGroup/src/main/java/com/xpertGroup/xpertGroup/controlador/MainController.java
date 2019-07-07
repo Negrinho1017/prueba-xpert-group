@@ -1,5 +1,6 @@
 package com.xpertGroup.xpertGroup.controlador;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ public class MainController {
 	
 	@RequestMapping(value = "/creacion-resultados", method = RequestMethod.POST)
 	@ResponseBody
+	@CrossOrigin
 	public CalculadoraMatriz crearCalculadoraMatrices(@RequestBody CalculadoraMatriz calculadoraMatriz) {
 		this.calculadoraMatriz = calculadoraMatriz;
 		this.calculadoraMatriz.generarMatrices();
@@ -26,6 +28,7 @@ public class MainController {
 	
 	@RequestMapping(value = "/consulta", method = RequestMethod.GET)
 	@ResponseBody
+	@CrossOrigin
 	public int consultar(@RequestParam int x1, @RequestParam int y1, @RequestParam int z1,
 			@RequestParam int x2, @RequestParam int y2, @RequestParam int z2) throws Exception {
 		Matriz intervalo1 = new Matriz(x1, y1, z1);
@@ -35,6 +38,7 @@ public class MainController {
 	
 	@RequestMapping(value = "/actualizacion", method = RequestMethod.PUT)
 	@ResponseBody
+	@CrossOrigin
 	public CalculadoraMatriz actualizar(@RequestBody Matriz matriz) throws Exception {
 		this.calculadoraMatriz.actualizar(matriz);
 		return this.calculadoraMatriz;

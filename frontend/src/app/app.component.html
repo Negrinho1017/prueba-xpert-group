@@ -1,0 +1,58 @@
+<form class="form-inline">
+  <label class="mr-sm-2" for="inlineFormCustomSelect">T (Casos de prueba)</label>
+  <input class="form-control" type="number" id="example-number-input" [(ngModel)]="casosPrueba" name="casosPrueba">
+
+  <button type="button" class="btn btn-dark" (click)="iniciarPrueba()">Aceptar</button>
+
+  <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+    <input type="checkbox" class="custom-control-input">
+    <span class="custom-control-indicator"></span>
+    <span class="custom-control-description">Le quedan {{casosPrueba}} casos de prueba por realizar</span>
+  </label>
+</form>
+
+<form class="form-inline" *ngIf="cargarValoresEntrada">
+  <label class="mr-sm-2" for="inlineFormCustomSelect">n (Cantidad de matrices)</label>
+  <input class="form-control" type="number" id="example-number-input" [(ngModel)]="calculadoraMatriz.n" name="n">
+
+  <label class="mr-sm-2" for="inlineFormCustomSelect">m (Número de operaciones)</label>
+  <input class="form-control" type="number" id="example-number-input" [(ngModel)]="calculadoraMatriz.m" name="m">
+
+  <button type="button" class="btn btn-dark" (click)="creacionResultados()">Aceptar</button>
+</form>
+
+<form class="form-inline" *ngIf="cargarFormularios">
+  <button type="button" class="btn btn-dark" (click)="consulta()">Consultar</button>
+  <button type="button" class="btn btn-dark" (click)="actualizacion()">Actualizar</button>
+</form>
+
+<div *ngIf="operacion==1">
+  <form class="form-inline">
+    <label class="mr-sm-2" for="inlineFormCustomSelect">intervalo 1</label>
+    <input class="form-control" type="number" id="example-number-input">
+
+    <label class="mr-sm-2" for="inlineFormCustomSelect">intervalo 2</label>
+    <input class="form-control" type="number" id="example-number-input">
+
+    <button type="button" class="btn btn-dark">Consultar</button>
+  </form>
+</div>
+<div *ngIf="operacion==2">
+  <form class="form-inline">
+    <label class="mr-sm-2" for="inlineFormCustomSelect">x</label>
+    <input class="form-control" type="number" id="example-number-input">
+
+    <label class="mr-sm-2" for="inlineFormCustomSelect">y</label>
+    <input class="form-control" type="number" id="example-number-input">
+
+    <label class="mr-sm-2" for="inlineFormCustomSelect">z</label>
+    <input class="form-control" type="number" id="example-number-input">
+
+    <label class="mr-sm-2" for="inlineFormCustomSelect">w</label>
+    <input class="form-control" type="number" id="example-number-input">
+
+    <button type="button" class="btn btn-dark">Actualizar</button>
+  </form>
+</div>
+
+<router-outlet></router-outlet>

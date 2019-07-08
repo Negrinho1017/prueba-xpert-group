@@ -17,8 +17,9 @@ public class CalculadoraMatriz {
 	private int contadorOperaciones = 0;
 	private List<Matriz> matrices;
 
-	public CalculadoraMatriz() {}
-	
+	public CalculadoraMatriz() {
+	}
+
 	public CalculadoraMatriz(int n, int m) {
 		super();
 		this.n = n;
@@ -86,6 +87,22 @@ public class CalculadoraMatriz {
 
 	public void setM(int m) {
 		this.m = m;
+	}
+
+	public int getContadorOperaciones() {
+		return contadorOperaciones;
+	}
+
+	public void setContadorOperaciones(int contadorOperaciones) {
+		this.contadorOperaciones = contadorOperaciones;
+	}
+
+	public List<Matriz> getMatrices() {
+		return matrices;
+	}
+
+	public void setMatrices(List<Matriz> matrices) {
+		this.matrices = matrices;
 	}
 
 }

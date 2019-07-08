@@ -39,9 +39,16 @@ public class MainController {
 	@RequestMapping(value = "/actualizacion", method = RequestMethod.PUT)
 	@ResponseBody
 	@CrossOrigin
-	public CalculadoraMatriz actualizar(@RequestBody Matriz matriz) throws Exception {
+	public Matriz actualizar(@RequestBody Matriz matriz) throws Exception {
 		this.calculadoraMatriz.actualizar(matriz);
-		return this.calculadoraMatriz;
+		return matriz;
+	}
+	
+	@RequestMapping(value = "/maximo-llamados", method = RequestMethod.GET)
+	@ResponseBody
+	@CrossOrigin
+	public boolean maximoLlamados() {
+		return this.calculadoraMatriz.hayMaximoDeLlamados();
 	}
 
 }

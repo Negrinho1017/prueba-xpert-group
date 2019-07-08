@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CalculadoraMatriz } from './model/calculadoraMatriz';
 import { AppService } from './app.service';
 import Swal from 'sweetalert2';
+import { Matriz } from './model/Matriz';
 
 @Component({
   selector: 'app-root',
@@ -18,19 +19,20 @@ export class AppComponent {
   operacion: number;
   intervalo1: number;
   intervalo2: number;
+  matriz: Matriz = new Matriz();
 
-  constructor( private service: AppService ) { }
+  constructor(private service: AppService) { }
 
-  iniciarPrueba(){
-    localStorage.setItem('inicioLaPrueba','true');
+  iniciarPrueba() {
+    localStorage.setItem('inicioLaPrueba', 'true');
     this.inicioLaPrueba = JSON.parse(localStorage.getItem('inicioLaPrueba'));
     this.cargarValoresEntrada = true;
   }
 
-  creacionResultados(){
+  creacionResultados() {
     this.service.crearResultado(this.calculadoraMatriz).subscribe(
       res => {
-        this.mensaje("Cantidad de matrices: "+res.n+", Número de operaciones: "+res.m,1);
+        this.mensaje("Cantidad de matrices: " + res.n + ", Número de operaciones: " + res.m, 1);
         this.cargarFormularios = true;
       }, error => {
         this.mensaje(error.error.mensaje, 2);
@@ -39,25 +41,59 @@ export class AppComponent {
 
 
 
-  mensaje(mensaje: string, tipoMensaje: number){
-    Swal.fire(tipoMensaje == 1? 'Excelente!' : 'Error!', mensaje, tipoMensaje == 1? 'success' : 'error');
+  mensaje(mensaje: string, tipoMensaje: number) {
+    Swal.fire(tipoMensaje == 1 ? 'Excelente!' : 'Error!', mensaje, tipoMensaje == 1 ? 'success' : 'error');
   }
 
-  consulta(){
+  consulta() {
     this.operacion = 1
-    if(this.intervalo1 < this.intervalo2){
+    if (this.intervalo1 < this.intervalo2) {
       this.service.consultar(this.intervalo1, this.intervalo2).subscribe(res => {
-        console.log("hola");
-        this.mensaje("El resultado es:"+ res,1);
+        this.mensaje("El resultado es: " + res, 1);
       }, error => {
-        this.mensaje(error.error.mensaje,2);
+        this.mensaje(error.error.mensaje, 2);
+        if (this.service.maximoLlamados().subscribe(res => res)) {
+          this.maximoLlamados();
+        }
+        if (this.casosPrueba <= 0) {
+          this.finalizar();
+        }
       });
-    }else{
-      this.mensaje("El primer intervalo debe ser mayor al segundo",2);
-    }  
+    } else {
+      this.mensaje("El primer intervalo debe ser mayor al segundo", 2);
+    }
   }
 
-  actualizacion(){
+  actualizacion() {
     this.operacion = 2;
+    this.service.actualizar(this.matriz).subscribe(
+      res => {
+        this.mensaje("Cambiada la matriz de coordenadas" + res.x + ", " + res.y + ", " + res.z + " por: " + res.w, 1);
+      }, error => {
+        this.mensaje(error.error.mensaje, 2);
+        if (this.service.maximoLlamados().subscribe(res => res)) {
+          this.maximoLlamados();
+        }
+        if (this.casosPrueba <= 0) {
+          this.finalizar();
+        }
+      });
+  }
+
+  finalizar() {
+    localStorage.setItem('inicioLaPrueba', 'false');
+    this.reiniciarValores();
+    window.location.reload();
+  }
+
+  maximoLlamados() {
+    this.casosPrueba--;
+    this.reiniciarValores();
+  }
+
+  reiniciarValores(){
+    this.operacion = 0;
+    this.cargarValoresEntrada = false;
+    this.cargarFormularios = false;
   }
 }

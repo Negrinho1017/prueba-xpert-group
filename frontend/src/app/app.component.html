@@ -1,4 +1,6 @@
+<div *ngIf="!finalizoPrueba()">
 <form class="form-inline">
+  
   <label class="mr-sm-2" for="inlineFormCustomSelect">T (Casos de prueba)</label>
   <input class="form-control" type="number" id="example-number-input" [(ngModel)]="casosPrueba" name="casosPrueba" [disabled]="inicioLaPrueba">
 
@@ -10,6 +12,8 @@
     <span class="custom-control-description">Le quedan {{casosPrueba}} casos de prueba por realizar</span>
   </label>
 </form>
+</div>
+<button *ngIf="finalizoPrueba()" type="button" class="btn btn-dark" (click)="finalizar()">Empezar de nuevo</button>
 
 <form class="form-inline" *ngIf="cargarValoresEntrada">
   <label class="mr-sm-2" for="inlineFormCustomSelect">n (Cantidad de matrices)</label>

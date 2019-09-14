@@ -3,11 +3,7 @@ package com.xpertGroup.xpertGroup.controlador;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.xpertGroup.xpertGroup.dominio.Matriz;
 import com.xpertGroup.xpertGroup.logica.CalculadoraMatriz;
@@ -44,13 +40,5 @@ public class MainControllerTest {
 		assertEquals(2, mainController.actualizar(new Matriz(2,2,2,4)).getY());	
 		assertEquals(2, mainController.actualizar(new Matriz(2,2,2,4)).getZ());	
 		assertEquals(4, mainController.actualizar(new Matriz(2,2,2,4)).getW());	
-	}
-	
-	@Test
-	public void maximoLlamadosTest() throws Exception {
-		calculadoraMatriz = Mockito.mock(CalculadoraMatriz.class);
-		mainController.crearCalculadoraMatrices(calculadoraMatriz);
-		Mockito.when(calculadoraMatriz.hayMaximoDeLlamados()).thenReturn(false);
-		assertEquals(false, mainController.maximoLlamados());	
 	}
 }

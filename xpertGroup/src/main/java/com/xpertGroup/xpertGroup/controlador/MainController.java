@@ -43,12 +43,4 @@ public class MainController {
 		this.calculadoraMatriz.actualizar(matriz);
 		return matriz;
 	}
-	
-	@RequestMapping(value = "/maximo-llamados", method = RequestMethod.GET)
-	@ResponseBody
-	@CrossOrigin
-	public boolean maximoLlamados() {
-		return this.calculadoraMatriz.hayMaximoDeLlamados();
-	}
-
 }

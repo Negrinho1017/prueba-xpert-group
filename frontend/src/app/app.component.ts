@@ -20,6 +20,7 @@ export class AppComponent implements OnInit{
   intervalo1: number;
   intervalo2: number;
   matriz: Matriz = new Matriz();
+  contadorOperaciones: number;
 
   constructor(private service: AppService) { }
 
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit{
   }
 
   iniciarPrueba() {
+    this.contadorOperaciones = 0;
     if(this.casosPrueba<=0){
         this.mensaje("Los casos de prueba deben ser mayores a 0",2);
         return;
@@ -63,15 +65,11 @@ export class AppComponent implements OnInit{
     if (this.intervalo1 <= this.intervalo2) {
       this.service.consultar(this.intervalo1, this.intervalo2).subscribe(res => {
         this.mensaje("El resultado es: " + res, 1);
-      }, error => {
-        this.mensaje(error.error.mensaje, 2);
-        if (this.service.maximoLlamados().subscribe(res => res)) {
+        this.contadorOperaciones++;
+        if(this.contadorOperaciones >= this.calculadoraMatriz.m){
           this.maximoLlamados();
         }
-        if (this.casosPrueba <= 0) {
-          this.finalizar();
-        }
-      });
+      }, error => this.mensaje(error.error.mensaje, 2));
     } else {
       this.mensaje("El primer intervalo debe ser menor o igual al segundo", 2);
     }
@@ -91,15 +89,11 @@ export class AppComponent implements OnInit{
     this.service.actualizar(this.matriz).subscribe(
       res => {
         this.mensaje("Cambiada la matriz de coordenadas" + res.x + ", " + res.y + ", " + res.z + " por: " + res.w, 1);
-      }, error => {
-        this.mensaje(error.error.mensaje, 2);
-        if (this.service.maximoLlamados().subscribe(res => res)) {
+        this.contadorOperaciones++;
+        if(this.contadorOperaciones >= this.calculadoraMatriz.m){
           this.maximoLlamados();
         }
-        if (this.casosPrueba <= 0) {
-          this.finalizar();
-        }
-      });
+      }, error => this.mensaje(error.error.mensaje, 2));
   }
 
   finalizar() {
@@ -117,5 +111,9 @@ export class AppComponent implements OnInit{
     this.operacion = 0;
     this.cargarValoresEntrada = false;
     this.cargarFormularios = false;
+  }
+
+  finalizoPrueba():boolean{
+    return this.inicioLaPrueba && this.casosPrueba==0
   }
 }

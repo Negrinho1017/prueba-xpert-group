@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
-
 import com.xpertGroup.xpertGroup.dominio.Matriz;
-import com.xpertGroup.xpertGroup.dominio.excepcion.Excepcion;
-
 public class CalculadoraMatriz {
 
 	private int n;
@@ -27,16 +24,12 @@ public class CalculadoraMatriz {
 	}
 
 	public void actualizar(Matriz matriz) throws Exception {
-		if (!hayMaximoDeLlamados()) {
-			IntStream.range(0, matrices.size()).forEach(i -> {
-				if (existeLaMatriz(matriz, i)) {
-					matrices.get(i).setW(matriz.getW());
-				}
-			});
-			contadorOperaciones++;
-		} else {
-			throw new Excepcion("Maximo de llamados");
-		}
+		IntStream.range(0, matrices.size()).forEach(i -> {
+			if (existeLaMatriz(matriz, i)) {
+				matrices.get(i).setW(matriz.getW());
+			}
+		});
+		contadorOperaciones++;
 	}
 
 	private boolean existeLaMatriz(Matriz matriz, int i) {
@@ -45,32 +38,23 @@ public class CalculadoraMatriz {
 	}
 
 	public int consultar(Matriz intervalo1, Matriz intervalo2) throws Exception {
-		if (!hayMaximoDeLlamados()) {
-			List<Matriz> matricesASumar = new ArrayList<>();
-			AtomicInteger matricesExistentes = new AtomicInteger(0);
-			IntStream.range(0, matrices.size()).forEach(i -> {
-				if (existeLaMatriz(intervalo1, i) || existeLaMatriz(intervalo2, i)) {
-					matricesExistentes.getAndIncrement();
-				}
-			});
-			if (matricesExistentes.intValue() == 2 || matricesExistentes.intValue() == 1) {
-				IntStream.range(intervalo1.getX() - 1, intervalo2.getX())
-						.forEach(i -> matricesASumar.add(matrices.get(i)));
-			}
-			contadorOperaciones++;
-			return matricesASumar.stream().map(m -> m.getW()).reduce(0, (a, b) -> a + b);
+		List<Matriz> matricesASumar = new ArrayList<>();
+		AtomicInteger matricesExistentes = new AtomicInteger(0);
+		IntStream.range(0, matrices.size()).forEach(i -> {
+			if(existeLaMatriz(intervalo1, i)) matricesExistentes.getAndIncrement();
+			if(existeLaMatriz(intervalo2, i)) matricesExistentes.getAndIncrement();
+		});
+		if (matricesExistentes.intValue() == 2) {
+			IntStream.range(intervalo1.getX() - 1, intervalo2.getX()).forEach(i -> matricesASumar.add(matrices.get(i)));
 		}
-		throw new Excepcion("Maximo de llamados");
+		contadorOperaciones++;
+		return matricesASumar.stream().map(m -> m.getW()).reduce(0, (a, b) -> a + b);
 	}
 
 	public void generarMatrices() {
 		List<Matriz> matrices = new ArrayList<>();
 		IntStream.range(1, n + 1).forEach(i -> matrices.add(new Matriz(i, i, i, 0)));
 		this.matrices = matrices;
-	}
-
-	public boolean hayMaximoDeLlamados() {
-		return contadorOperaciones >= m;
 	}
 
 	public int getN() {

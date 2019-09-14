@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.xpertGroup.xpertGroup.dominio.Matriz;
-import com.xpertGroup.xpertGroup.dominio.excepcion.Excepcion;
 
 public class CalculadoraMatrizTest {
 	
@@ -48,33 +47,6 @@ public class CalculadoraMatrizTest {
 		assertEquals(4, calculadoraMatriz.consultar(intervalo1, intervalo2));
 	}
 	
-	@Test(expected = Excepcion.class)
-	public void consultarMasVecesDeLasPermitidasTest() throws Exception {
-		CalculadoraMatriz calculadoraMatriz = new CalculadoraMatriz(5, 2);
-		calculadoraMatriz.generarMatrices();
-		Matriz matriz = new Matriz(1,1,1,4);
-		Matriz matriz2 = new Matriz(4,4,4,4);
-		Matriz intervalo1 = new Matriz(1,1,1);
-		Matriz intervalo2 = new Matriz(3,3,3);
-		calculadoraMatriz.actualizar(matriz);
-		calculadoraMatriz.actualizar(matriz2);
-		assertEquals(4, calculadoraMatriz.consultar(intervalo1, intervalo2));
-	}
-	
-	@Test(expected = Excepcion.class)
-	public void actualizarMasVecesDeLasPermitidasTest() throws Exception {
-		CalculadoraMatriz calculadoraMatriz = new CalculadoraMatriz(5, 2);
-		calculadoraMatriz.generarMatrices();
-		Matriz matriz = new Matriz(1,1,1,4);
-		Matriz matriz2 = new Matriz(4,4,4,4);
-		Matriz intervalo1 = new Matriz(1,1,1);
-		Matriz intervalo2 = new Matriz(3,3,3);
-		calculadoraMatriz.actualizar(matriz);
-		calculadoraMatriz.actualizar(matriz2);
-		calculadoraMatriz.actualizar(matriz2);
-		assertEquals(4, calculadoraMatriz.consultar(intervalo1, intervalo2));
-	}
-	
 	@Test
 	public void consultarInexistenteTest() throws Exception {
 		CalculadoraMatriz calculadoraMatriz = new CalculadoraMatriz(3, 3);
@@ -84,5 +56,16 @@ public class CalculadoraMatrizTest {
 		Matriz intervalo2 = new Matriz(3,2,3);
 		calculadoraMatriz.actualizar(matriz);
 		assertEquals(0, calculadoraMatriz.consultar(intervalo1, intervalo2));
+	}
+	
+	@Test
+	public void consultarMatricesMismoValor() throws Exception {
+		CalculadoraMatriz calculadoraMatriz = new CalculadoraMatriz(3, 3);
+		calculadoraMatriz.generarMatrices();
+		Matriz matriz = new Matriz(1,1,1,4);
+		Matriz intervalo1 = new Matriz(1,1,1);
+		Matriz intervalo2 = new Matriz(1,1,1);
+		calculadoraMatriz.actualizar(matriz);
+		assertEquals(4, calculadoraMatriz.consultar(intervalo1, intervalo2));
 	}
 }

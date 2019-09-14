@@ -53,7 +53,7 @@ public class CalculadoraMatriz {
 					matricesExistentes.getAndIncrement();
 				}
 			});
-			if (matricesExistentes.intValue() == 2) {
+			if (matricesExistentes.intValue() == 2 || matricesExistentes.intValue() == 1) {
 				IntStream.range(intervalo1.getX() - 1, intervalo2.getX())
 						.forEach(i -> matricesASumar.add(matrices.get(i)));
 			}

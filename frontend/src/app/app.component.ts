@@ -32,8 +32,8 @@ export class AppComponent implements OnInit{
 
   iniciarPrueba() {
     this.contadorOperaciones = 0;
-    if(this.casosPrueba<=0){
-        this.mensaje("Los casos de prueba deben ser mayores a 0",2);
+    if(this.casosPrueba<=0 || this.casosPrueba > 50){
+        this.mensaje("Los casos de prueba deben ser mayores a 0 y menores o iguales a 50",2);
         return;
       }
     localStorage.setItem('inicioLaPrueba', 'true');
@@ -42,6 +42,7 @@ export class AppComponent implements OnInit{
   }
 
   creacionResultados() {
+    if(!this.matrizCorrecta() || !this.operacionCorrecta()) return;
     this.service.crearResultado(this.calculadoraMatriz).subscribe(
       res => {
         this.mensaje("Cantidad de matrices: " + res.n + ", Número de operaciones: " + res.m, 1);
@@ -115,5 +116,21 @@ export class AppComponent implements OnInit{
 
   finalizoPrueba():boolean{
     return this.inicioLaPrueba && this.casosPrueba==0
+  }
+
+  matrizCorrecta():boolean{
+    if(this.calculadoraMatriz.n <= 0 || this.calculadoraMatriz.n > 100){
+      this.mensaje("Valor no permitido para n",2);
+      return false;
+    }
+    return true;
+  }
+
+  operacionCorrecta():boolean{
+    if(this.calculadoraMatriz.m <= 0 || this.calculadoraMatriz.m > 1000){
+      this.mensaje("Valor no permitido para m",2);
+      return false;
+    }
+    return true;
   }
 }
